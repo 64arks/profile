@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login — Acme Tembo Portfolio</title>
+    <link rel="stylesheet" href="admin-login.css">
+    <style>
+        .error-banner {
+            display: none;
+            background: #fff0f0;
+            color: #d32f2f;
+            border: 1px solid #ffcdd2;
+            padding: 12px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 20px;
+            animation: fadeIn 0.25s ease;
+        }
+        .demo-credentials {
+            margin-top: 25px;
+            padding: 14px 16px;
+            background: #f8f9fa;
+            border: 1px dashed #d0d7de;
+            border-radius: 10px;
+            font-size: 12px;
+            color: #57606a;
+            line-height: 1.5;
+        }
+        .demo-credentials strong {
+            color: #24292f;
+        }
+        .demo-credentials code {
+            background: #eaeef2;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            color: #0969da;
+        }
+        .quick-fill-btn {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 4px 10px;
+            background: #24292f;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .quick-fill-btn:hover {
+            opacity: 0.85;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-page">
+
+        <!-- LEFT LOGIN SECTION -->
+        <section class="login-section">
+
+            <div class="logo">
+                <a href="index.html">
+                    <img src="Test.jpg" alt="Acme Tembo Logo">
+                </a>
+            </div>
+
+            <div class="login-content">
+
+                <h1>Welcome back.</h1>
+                <p>Sign in to manage your work, view analytics, and update your portfolio.</p>
+
+                <div id="error-banner" class="error-banner" role="alert"></div>
+
+                <form id="login-form" autocomplete="on">
+
+                    <div class="input-group">
+                        <label for="username">Username or Email</label>
+                        <input 
+                            type="text" 
+                            id="username" 
+                            name="username" 
+                            placeholder="admin" 
+                            required 
+                            autofocus
+                        >
+                    </div>
+
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <div class="password-box">
+                            <input 
+                                type="password" 
+                                id="password" 
+                                name="password" 
+                                placeholder="••••••••" 
+                                required
+                            >
+                            <button type="button" id="toggle-password" aria-label="Toggle password visibility">Show</button>
+                        </div>
+                    </div>
+
+                    <div class="login-options">
+                        <label>
+                            <input type="checkbox" id="remember" name="remember"> 
+                            Remember me
+                        </label>
+                        <a href="#" id="forgot-password-link">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" id="submit-btn" class="login-btn">
+                        Sign in to Dashboard
+                    </button>
+
+                    <div class="demo-credentials">
+                        <strong>Default Admin Access:</strong><br>
+                        Username: <code>admin</code> &nbsp;|&nbsp; Password: <code>admin123</code><br>
+                        <button type="button" id="quick-fill" class="quick-fill-btn">⚡ Auto-fill Admin Credentials</button>
+                    </div>
+
+                    <a href="index.html" class="back-home">← Back to portfolio</a>
+
+                </form>
+
+            </div>
+
+        </section>
+
+        <!-- RIGHT IMAGE SECTION -->
+        <section class="image-section">
+            <img src="logo4.jpg" alt="Acme Portfolio Showcase">
+        </section>
+
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="data-store.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // If already authenticated, redirect to dashboard
+            if (DataStore.isAuthenticated()) {
+                window.location.href = "admin-dashboard.html";
+                return;
+            }
+
+            const loginForm = document.getElementById("login-form");
+            const usernameInput = document.getElementById("username");
+            const passwordInput = document.getElementById("password");
+            const rememberCheckbox = document.getElementById("remember");
+            const togglePasswordBtn = document.getElementById("toggle-password");
+            const errorBanner = document.getElementById("error-banner");
+            const quickFillBtn = document.getElementById("quick-fill");
+            const submitBtn = document.getElementById("submit-btn");
+
+            // Password toggle
+            togglePasswordBtn.addEventListener("click", () => {
+                const isPassword = passwordInput.type === "password";
+                passwordInput.type = isPassword ? "text" : "password";
+                togglePasswordBtn.textContent = isPassword ? "Hide" : "Show";
+            });
+
+            // Quick Fill
+            quickFillBtn.addEventListener("click", () => {
+                const auth = DataStore.getAuthConfig();
+                usernameInput.value = auth.username || "admin";
+                passwordInput.value = auth.password || "admin123";
+                errorBanner.style.display = "none";
+            });
+
+            // Forgot password hint
+            document.getElementById("forgot-password-link").addEventListener("click", (e) => {
+                e.preventDefault();
+                const auth = DataStore.getAuthConfig();
+                alert(`Admin Password Hint:\nUsername: ${auth.username}\nPassword: ${auth.password}\n\n(You can change this password anytime inside Admin Dashboard > Settings.)`);
+            });
+
+            // Form Submit
+            loginForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                errorBanner.style.display = "none";
+                submitBtn.disabled = true;
+                submitBtn.textContent = "Verifying...";
+
+                const username = usernameInput.value.trim();
+                const password = passwordInput.value;
+                const remember = rememberCheckbox.checked;
+
+                setTimeout(() => {
+                    const result = DataStore.login(username, password, remember);
+
+                    if (result.success) {
+                        submitBtn.textContent = "Success! Redirecting...";
+                        window.location.href = "admin-dashboard.html";
+                    } else {
+                        errorBanner.textContent = result.error || "Invalid username or password.";
+                        errorBanner.style.display = "block";
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = "Sign in to Dashboard";
+                        passwordInput.value = "";
+                        passwordInput.focus();
+                    }
+                }, 350);
+            });
+        });
+    </script>
+</body>
+</html>

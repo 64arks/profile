@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Acme Tembo — Developer</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script>
+        (function() {
+            if (localStorage.getItem("theme") === "dark") {
+                document.documentElement.classList.add("dark-mode");
+                document.addEventListener("DOMContentLoaded", function() {
+                    document.body.classList.add("dark-mode");
+                });
+            }
+        })();
+        // One-time gallery migration: clear empty gallery so data-store.js re-seeds defaults
+        (function() {
+            var g = localStorage.getItem("portfolio_gallery_photos");
+            if (g === "[]" || g === null) {
+                localStorage.removeItem("portfolio_gallery_photos");
+            }
+        })();
+    </script>
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
+
+    <header class="navbar">
+
+        <a href="#" class="logo">
+    <img src="Test.jpg" alt="ACME Logo">
+</a>
+
+        <nav>
+             <span class="nav-glass"></span>
+
+            <a href="#work">Work</a>
+            <a href="#about">About</a>
+            <a href="#profiles">Profiles</a>
+            <a href="#contact">Contact</a>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+    <span class="sun-icon">☀</span>
+    <span class="moon-icon">☾</span>
+</button>
+        </nav>
+
+        <a href="#contact" class="nav-button">Let's talk</a>
+
+    </header>
+
+
+    <main>
+
+        <!-- =========================
+             HERO
+        ========================== -->
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <p class="eyebrow">
+                    COMPUTER SCIENCE · DEVELOPER
+                </p>
+
+                <h1>
+                    I build things<br>
+                    <span>people can use.</span>
+                </h1>
+
+                <p class="hero-description">
+                    I design and build simple digital experiences,
+                    websites and software with a focus on clarity.
+                </p>
+
+                <a href="#work" class="primary-button">
+                    Explore my work
+                    <span>↗</span>
+                </a>
+
+            </div>
+
+            <div class="hero-scroll">
+                Scroll to explore
+                <span>↓</span>
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             ABOUT
+        ========================== -->
+
+        <section class="about section" id="about">
+
+            <div class="section-label">
+                <span>01</span>
+                About me
+            </div>
+
+            <div class="about-grid">
+
+                <div class="about-image">
+                    <img src="logo4.jpg" alt="Acme Tembo">
+                </div>
+
+                <div class="about-content">
+
+                    <h2>
+                        Curious by nature.
+                        <span>Always building.</span>
+                    </h2>
+
+                    <p>
+                        I'm Acme, a Computer Science student and
+                        developer interested in technology, design
+                        and building useful digital products.
+                    </p>
+
+                    <p>
+                        I enjoy turning ideas into simple,
+                        functional experiences — from websites
+                        and interfaces to software systems.
+                    </p>
+
+                    <a href="#contact" class="text-link">
+                        Get to know me
+                        <span>↗</span>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             FEATURED WORK
+        ========================== -->
+
+        <section class="work section" id="work">
+
+            <div class="section-label">
+                <span>02</span>
+                Featured work
+            </div>
+
+            <div class="section-heading">
+
+                <h2>
+                    Things I've
+                    <span>built.</span>
+                </h2>
+
+                <p>
+                    A selection of projects I've designed,
+                    developed and experimented with.
+                </p>
+
+            </div>
+
+
+            <!-- BANKING PROJECT -->
+
+            <article class="featured-project banking-project">
+
+                <div class="project-image">
+
+                    <div class="browser-window">
+
+                        <div class="browser-top">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                        <div class="banking-preview">
+
+                            <div class="banking-sidebar">
+                                <strong>Bank.</strong>
+
+                                <div class="banking-menu active">
+                                    Overview
+                                </div>
+
+                                <div class="banking-menu">
+                                    Payments
+                                </div>
+
+                                <div class="banking-menu">
+                                    Cards
+                                </div>
+
+                                <div class="banking-menu">
+                                    Settings
+                                </div>
+                            </div>
+
+                            <div class="banking-main">
+
+                                <p>Good morning, Acme</p>
+
+                                <h3>
+                                    ZMW 24,850.00
+                                </h3>
+
+                                <div class="balance-card">
+
+                                    <span>Available balance</span>
+
+                                    <strong>
+                                        ZMW 24,850.00
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="project-info">
+
+                    <p class="project-number">
+                        01 / WEBSITE
+                    </p>
+
+                    <h3>
+                        Banking,
+                        <span>simplified.</span>
+                    </h3>
+
+                    <p>
+                        A clean banking website concept focused
+                        on simplicity, accessibility and a
+                        modern financial experience.
+                    </p>
+
+                    <div class="project-tech">
+                        <span>HTML</span>
+                        <span>CSS</span>
+                        <span>JavaScript</span>
+                        <span>UI / UX</span>
+                    </div>
+
+                    <a href="#" class="text-link">
+                        View project
+                        <span>↗</span>
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- UNISYNC -->
+
+            <article class="featured-project">
+
+                <div class="project-image project-placeholder">
+
+                    <div class="placeholder-content">
+                        <span>UNISYNC</span>
+                        <strong>
+                            Academic life,
+                            connected.
+                        </strong>
+                    </div>
+
+                </div>
+
+                <div class="project-info">
+
+                    <p class="project-number">
+                        02 / PLATFORM
+                    </p>
+
+                    <h3>
+                        Uni<span>Sync.</span>
+                    </h3>
+
+                    <p>
+                        A centralized academic platform designed
+                        to connect students, lecturers and
+                        administrators.
+                    </p>
+
+                    <div class="project-tech">
+                        <span>UI / UX</span>
+                        <span>Web</span>
+                        <span>Database</span>
+                    </div>
+
+                    <a href="#" class="text-link">
+                        View project
+                        <span>↗</span>
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- MPEPO -->
+
+            <article class="featured-project">
+
+                <div class="project-image project-placeholder dark">
+
+                    <div class="placeholder-content">
+
+                        <span>MPEPO POS</span>
+
+                        <strong>
+                            Business made
+                            simpler.
+                        </strong>
+
+                    </div>
+
+                </div>
+
+                <div class="project-info">
+
+                    <p class="project-number">
+                        03 / MOBILE APP
+                    </p>
+
+                    <h3>
+                        Mpepo
+                        <span>POS.</span>
+                    </h3>
+
+                    <p>
+                        A point-of-sale system designed for
+                        modern business operations.
+                    </p>
+
+                    <div class="project-tech">
+                        <span>Flutter</span>
+                        <span>Python</span>
+                        <span>FastAPI</span>
+                        <span>SQLite</span>
+                    </div>
+
+                    <a href="#" class="text-link">
+                        View project
+                        <span>↗</span>
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- NEBULA DYING STAR -->
+
+            <article class="featured-project nebula-project">
+
+                <div class="project-image nebula-art">
+                    <span class="nebula-banner">Coming soon</span>
+                    <div class="nebula-star" aria-hidden="true"></div>
+                    <div class="nebula-art-title">
+                        <span>AN ARTIFICIAL INTELLIGENCE CONCEPT</span>
+                        <strong>Nebula<br>Dying Star</strong>
+                    </div>
+                </div>
+
+                <div class="project-info">
+
+                    <p class="project-number">
+                        04 / AI CONCEPT
+                    </p>
+
+                    <h3>
+                        Nebula <span>Dying Star.</span>
+                    </h3>
+
+                    <p>
+                        An AI concept taking shape in a universe of its own. More details coming soon.
+                    </p>
+
+                    <div class="project-tech">
+                        <span>Artificial Intelligence</span>
+                        <span>In development</span>
+                    </div>
+
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- =========================
+             ALL PROJECTS
+        ========================== -->
+
+        <section class="projects section">
+
+            <div class="section-label">
+                <span>03</span>
+                All projects
+            </div>
+
+            <div class="projects-header">
+
+                <h2>
+                    More things
+                    <span>I've made.</span>
+                </h2>
+
+            </div>
+
+
+            <div class="project-list">
+
+                <a href="#" class="project-row">
+
+                    <div>
+                        <span>01</span>
+                        Banking Website
+                    </div>
+
+                    <span>Website ↗</span>
+
+                </a>
+
+
+                <a href="#" class="project-row">
+
+                    <div>
+                        <span>02</span>
+                        UniSync
+                    </div>
+
+                    <span>Platform ↗</span>
+
+                </a>
+
+
+                <a href="#" class="project-row">
+
+                    <div>
+                        <span>03</span>
+                        Mpepo POS
+                    </div>
+
+                    <span>Mobile App ↗</span>
+
+                </a>
+
+
+                <a href="#" class="project-row">
+
+                    <div>
+                        <span>04</span>
+                        Developer Portfolio
+                    </div>
+
+                    <span>Website ↗</span>
+
+                </a>
+
+
+                <a href="#" class="project-row">
+
+                    <div>
+                        <span>05</span>
+                        Keyboard Store
+                    </div>
+
+                    <span>E-commerce ↗</span>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             PROFILES
+        ========================== -->
+
+        <section class="profiles section" id="profiles">
+
+            <div class="section-label">
+                <span>04</span>
+                Find me online
+            </div>
+
+            <div class="section-heading">
+
+                <h2>
+                    Follow the
+                    <span>journey.</span>
+                </h2>
+
+                <p>
+                    Find my work, projects and professional profile
+                    across the platforms below.
+                </p>
+
+            </div>
+
+
+            <div class="profile-grid">
+
+
+                <!-- GITHUB -->
+                <a href="https://github.com/64arks" target="_blank" rel="noopener noreferrer" class="profile-card">
+                    <div class="profile-card-image github-card">
+                        <span>GITHUB</span>
+                    </div>
+                    <div class="profile-card-info">
+                        <div>
+                            <h3>GitHub</h3>
+                            <p>@64arks · Code & projects</p>
+                        </div>
+                        <span class="profile-arrow">↗</span>
+                    </div>
+                </a>
+
+                <!-- LINKEDIN -->
+                <a href="https://www.linkedin.com/in/acme-tembo" target="_blank" rel="noopener noreferrer" class="profile-card">
+                    <div class="profile-card-image linkedin-card">
+                        <span>LINKEDIN</span>
+                    </div>
+                    <div class="profile-card-info">
+                        <div>
+                            <h3>LinkedIn</h3>
+                            <p>Acme Tembo · Professional network</p>
+                        </div>
+                        <span class="profile-arrow">↗</span>
+                    </div>
+                </a>
+
+                <!-- WHATSAPP -->
+                <a href="https://wa.me/260773615067" target="_blank" rel="noopener noreferrer" class="profile-card">
+                    <div class="profile-card-image whatsapp-card">
+                        <span>WHATSAPP</span>
+                    </div>
+                    <div class="profile-card-info">
+                        <div>
+                            <h3>WhatsApp</h3>
+                            <p>+260 773 615 067 · Message directly</p>
+                        </div>
+                        <span class="profile-arrow">↗</span>
+                    </div>
+                </a>
+
+                <!-- EMAIL -->
+                <a href="mailto:acmetembo64@gmail.com" class="profile-card">
+                    <div class="profile-card-image email-card">
+                        <span>EMAIL</span>
+                    </div>
+                    <div class="profile-card-info">
+                        <div>
+                            <h3>Email</h3>
+                            <p>acmetembo64@gmail.com</p>
+                        </div>
+                        <span class="profile-arrow">↗</span>
+                    </div>
+                </a>
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             GALLERY
+        ========================== -->
+
+        <section class="gallery section" id="gallery">
+
+            <div class="section-label">
+                <span>05</span>
+                A little more about me
+            </div>
+
+            <div class="gallery-heading">
+
+                <h2>
+                    Beyond the
+                    <span>code.</span>
+                </h2>
+
+            </div>
+
+
+            <div class="gallery-grid" id="public-gallery-grid">
+                <!-- Dynamically loaded by script.js from admin gallery photos -->
+                <div class="gallery-empty">
+                    <p>No photos uploaded yet — check back soon.</p>
+                </div>
+            </div>
+
+            <div class="gallery-see-more" id="gallery-see-more" style="display:none;">
+                <button class="gallery-see-more-btn" id="gallery-see-more-btn">
+                    See all photos
+                    <span class="gallery-arrow">↓</span>
+                </button>
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             CURRENTLY
+        ========================== -->
+
+        <section class="currently section">
+
+            <div class="section-label">
+                <span>06</span>
+                Currently
+            </div>
+
+            <div class="currently-content">
+
+                <h2>
+                    Always learning.
+                    <span>Always building.</span>
+                </h2>
+
+                <div class="currently-list">
+
+                    <div>
+                        <span>01</span>
+                        Studying Computer Science
+                    </div>
+
+                    <div>
+                        <span>02</span>
+                        Building personal projects
+                    </div>
+
+                    <div>
+                        <span>03</span>
+                        Improving UI / UX
+                    </div>
+
+                    <div>
+                        <span>04</span>
+                        Learning backend development
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             CONTACT
+        ========================== -->
+
+        <section class="contact section" id="contact">
+
+            <div class="contact-content">
+
+                <p class="eyebrow">
+                    HAVE AN IDEA?
+                </p>
+
+                <h2>
+                    Let's build
+                    <span>something.</span>
+                </h2>
+
+                <div class="contact-form-container">
+                    <form id="portfolio-contact-form" class="contact-form">
+                        <div class="contact-form-row">
+                            <input type="text" id="contact-name" class="contact-input" placeholder="Your Name" required>
+                            <input type="email" id="contact-email" class="contact-input" placeholder="Your Email" required>
+                        </div>
+                        <input type="text" id="contact-subject" class="contact-input" placeholder="Subject / Project Inquiry">
+                        <textarea id="contact-message" class="contact-textarea" placeholder="Tell me about your idea or project..." required></textarea>
+                        <button type="submit" id="contact-submit-btn" class="contact-submit-btn">
+                            <span>Send Message</span>
+                            <span>↗</span>
+                        </button>
+                    </form>
+                    <div id="contact-success-msg" class="contact-success-msg">
+                        ✓ Thank you! Your message has been sent to Acme. I'll get back to you shortly.
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; font-size: 13px; color: var(--grey);">
+                    Or reach out directly via <a href="https://wa.me/260773615067" target="_blank" rel="noopener noreferrer" class="text-link" style="display:inline; font-weight:600;">WhatsApp ↗</a> or <a href="mailto:acmetembo64@gmail.com" class="text-link" style="display:inline; font-weight:600;">email ↗</a>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <div class="footer-top">
+
+            <strong>ACME</strong>
+
+            <p>
+                Designed & built by Acme Tembo.
+            </p>
+
+        </div>
+
+        <div class="footer-bottom">
+
+            <span>© 2026 Acme Tembo</span>
+
+            <div>
+                <a href="https://github.com/64arks" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://www.linkedin.com/in/acme-tembo" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="https://wa.me/260773615067" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                <a href="mailto:acmetembo64@gmail.com">Email</a>
+                <a href="admin-login.html" style="font-weight: 600; color: inherit; opacity: 0.75;" title="Admin Dashboard">Admin ↗</a>
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <script src="data-store.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>

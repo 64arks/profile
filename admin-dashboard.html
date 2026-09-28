@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard — Acme Tembo Portfolio</title>
+    <link rel="stylesheet" href="admin-dashboard.css">
+    <script>
+        (function() {
+            if (localStorage.getItem("theme") === "dark") {
+                document.documentElement.classList.add("dark-mode");
+                document.addEventListener("DOMContentLoaded", function() {
+                    document.body.classList.add("dark-mode");
+                });
+            }
+        })();
+    </script>
+</head>
+<body>
+
+    <div class="dashboard">
+
+        <!-- =========================
+             SIDEBAR
+        ========================== -->
+        <aside class="sidebar">
+
+            <div class="sidebar-top">
+
+                <a href="index.html" class="logo" title="View Portfolio">
+                    <img src="Test.jpg" alt="ACME Logo">
+                </a>
+
+                <nav>
+                    <button class="nav-item active" data-tab="dashboard">
+                        <span>⌂</span>
+                        Dashboard
+                    </button>
+
+                    <button class="nav-item" data-tab="work">
+                        <span>▣</span>
+                        My Work
+                    </button>
+
+                    <button class="nav-item" data-tab="analytics">
+                        <span>📈</span>
+                        Analytics
+                    </button>
+
+                    <button class="nav-item" data-tab="messages">
+                        <span>✉</span>
+                        Messages
+                        <span id="sidebar-msg-badge" class="badge" style="display:none;">0</span>
+                    </button>
+
+                    <button class="nav-item" data-tab="images">
+                        <span>▧</span>
+                        Images
+                    </button>
+
+                    <button class="nav-item" data-tab="settings">
+                        <span>⚙</span>
+                        Settings
+                    </button>
+                </nav>
+
+            </div>
+
+            <div class="sidebar-footer">
+                <button id="theme-toggle-btn" class="theme-btn" title="Toggle Light / Dark Mode">
+                    <span>🌓</span>
+                    Theme Mode
+                </button>
+
+                <a href="index.html" target="_blank" class="live-link" title="Open live portfolio in new tab">
+                    <span>Public Site ↗</span>
+                </a>
+
+                <button id="logout-btn" class="logout" title="Sign out of Admin">
+                    <span>↪</span>
+                    Logout
+                </button>
+            </div>
+
+        </aside>
+
+
+        <!-- =========================
+             MAIN CONTENT
+        ========================== -->
+        <main class="main">
+
+            <!-- TOP BAR -->
+            <header class="topbar">
+
+                <div>
+                    <h1 id="topbar-title">Dashboard</h1>
+                    <p id="topbar-subtitle">Manage your portfolio, audience, and content.</p>
+                </div>
+
+                <div class="admin-profile">
+                    <div class="admin-avatar">
+                        AT
+                    </div>
+
+                    <div>
+                        <strong>Acme Tembo</strong>
+                        <small>Administrator</small>
+                    </div>
+                </div>
+
+            </header>
+
+
+            <!-- =========================
+                 TAB 1: DASHBOARD OVERVIEW
+            ========================== -->
+            <div id="tab-dashboard" class="tab-pane active">
+
+                <!-- STATISTICS OVERVIEW -->
+                <section class="stats">
+
+                    <div class="stat-card">
+                        <span class="stat-label">Total Projects</span>
+                        <strong id="stat-total-projects">0</strong>
+                        <small id="stat-published-projects">0 published</small>
+                    </div>
+
+                    <div class="stat-card">
+                        <span class="stat-label">Visitors</span>
+                        <strong id="stat-total-visitors">0</strong>
+                        <small id="stat-today-visitors">0 today</small>
+                    </div>
+
+                    <div class="stat-card">
+                        <span class="stat-label">Messages</span>
+                        <strong id="stat-total-messages">0</strong>
+                        <small id="stat-unread-messages">0 unread</small>
+                    </div>
+
+                    <div class="stat-card">
+                        <span class="stat-label">Images</span>
+                        <strong id="stat-total-images">0</strong>
+                        <small>Assets in library</small>
+                    </div>
+
+                </section>
+
+
+                <!-- QUICK ACTIONS -->
+                <div style="display:flex;gap:12px;margin-bottom:35px;flex-wrap:wrap;">
+                    <button class="add-btn trigger-add-work">+ Add New Work</button>
+                    <button class="btn-secondary" onclick="document.querySelector('[data-tab=analytics]').click()">View Detailed Traffic</button>
+                    <button class="btn-secondary" onclick="document.querySelector('[data-tab=messages]').click()">Check Inquiries</button>
+                    <a href="index.html" target="_blank" class="btn-secondary" style="text-decoration:none;display:inline-flex;align-items:center;">Live Portfolio ↗</a>
+                </div>
+
+
+                <!-- RECENT PROJECTS PREVIEW -->
+                <section class="work-section" style="margin-bottom:40px;">
+                    <div class="section-header">
+                        <div>
+                            <h2>Recent Projects</h2>
+                            <p>Latest additions to your showcase.</p>
+                        </div>
+                        <button class="btn-secondary" onclick="document.querySelector('[data-tab=work]').click()">View All Projects →</button>
+                    </div>
+
+                    <div id="recent-work-grid" class="projects"></div>
+                </section>
+
+
+                <!-- RECENT VISITOR SESSIONS -->
+                <section class="panel-card">
+                    <div class="section-header" style="margin-bottom:15px;">
+                        <div>
+                            <div class="panel-title">Recent Visitor Activity</div>
+                            <div class="panel-subtitle" style="margin-bottom:0;">Live visits recorded from your portfolio homepage.</div>
+                        </div>
+                        <button class="btn-secondary" onclick="document.querySelector('[data-tab=analytics]').click()">Analytics Breakdown →</button>
+                    </div>
+
+                    <div class="data-table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Page</th>
+                                    <th>Device</th>
+                                    <th>Browser</th>
+                                    <th>Activity</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recent-visits-list"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+            </div>
+
+
+            <!-- =========================
+                 TAB 2: MY WORK (PROJECTS)
+            ========================== -->
+            <div id="tab-work" class="tab-pane">
+
+                <section class="work-section">
+
+                    <div class="section-header">
+                        <div>
+                            <h2>Projects Showcase</h2>
+                            <p>Add, edit, publish, or delete projects appearing on your public website.</p>
+                        </div>
+
+                        <button class="add-btn trigger-add-work">
+                            + Add New Work
+                        </button>
+                    </div>
+
+                    <!-- SEARCH & FILTER -->
+                    <div class="controls-bar">
+                        <input type="text" id="search-work" class="search-input" placeholder="Search by title, description or category...">
+                        <select id="filter-status" class="filter-select">
+                            <option value="all">All Statuses</option>
+                            <option value="published">Published Only</option>
+                            <option value="draft">Drafts Only</option>
+                        </select>
+                    </div>
+
+                    <!-- PROJECTS GRID -->
+                    <div id="projects-grid" class="projects"></div>
+
+                </section>
+
+            </div>
+
+
+            <!-- =========================
+                 TAB 3: VISITOR ANALYTICS
+            ========================== -->
+            <div id="tab-analytics" class="tab-pane">
+
+                <!-- ANALYTICS CARDS -->
+                <section class="stats">
+                    <div class="stat-card">
+                        <span class="stat-label">Total Views</span>
+                        <strong id="analytics-total-views">0</strong>
+                        <small>All time page views</small>
+                    </div>
+
+                    <div class="stat-card">
+                        <span class="stat-label">Unique Visitors</span>
+                        <strong id="analytics-unique-visitors">0</strong>
+                        <small>Distinct devices</small>
+                    </div>
+
+                    <div class="stat-card">
+                        <span class="stat-label">Today's Traffic</span>
+                        <strong id="analytics-today-views">0</strong>
+                        <small>Page views today</small>
+                    </div>
+
+                    <div class="stat-card">
+                        <span class="stat-label">Tracking Status</span>
+                        <strong style="color:#137333;">Live</strong>
+                        <small>Recording visits automatically</small>
+                    </div>
+                </section>
+
+                <div class="analytics-grid">
+
+                    <!-- DEVICE BREAKDOWN -->
+                    <div class="panel-card">
+                        <div class="panel-title">Devices Breakdown</div>
+                        <div class="panel-subtitle">Audience viewing platform breakdown.</div>
+
+                        <div class="breakdown-row">
+                            <div class="breakdown-label">
+                                <span>Desktop Computers</span>
+                                <strong id="device-desktop-pct">0%</strong>
+                            </div>
+                            <div class="progress-track">
+                                <div id="device-desktop-bar" class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="breakdown-row">
+                            <div class="breakdown-label">
+                                <span>Mobile Phones</span>
+                                <strong id="device-mobile-pct">0%</strong>
+                            </div>
+                            <div class="progress-track">
+                                <div id="device-mobile-bar" class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="breakdown-row">
+                            <div class="breakdown-label">
+                                <span>Tablets</span>
+                                <strong id="device-tablet-pct">0%</strong>
+                            </div>
+                            <div class="progress-track">
+                                <div id="device-tablet-bar" class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BROWSER BREAKDOWN -->
+                    <div class="panel-card">
+                        <div class="panel-title">Browsers</div>
+                        <div class="panel-subtitle">Client web browsers used.</div>
+                        <div id="browser-breakdown-list"></div>
+                    </div>
+
+                </div>
+
+                <!-- DETAILED LOGS -->
+                <div class="section-header" style="margin-top:20px;">
+                    <div>
+                        <h2>Detailed Visitor Log</h2>
+                        <p>Real-time records of every visit to your web profile.</p>
+                    </div>
+                    <button id="reset-analytics-btn" class="btn-secondary" style="color:#c44;">Clear Visitor Logs</button>
+                </div>
+
+                <div class="data-table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Page Visited</th>
+                                <th>Device</th>
+                                <th>Browser</th>
+                                <th>Date & Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="analytics-full-logs"></tbody>
+                    </table>
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 TAB 4: MESSAGES INBOX
+            ========================== -->
+            <div id="tab-messages" class="tab-pane">
+
+                <div class="section-header">
+                    <div>
+                        <h2>Client Messages & Inquiries</h2>
+                        <p>Messages submitted by people through your portfolio website contact form.</p>
+                    </div>
+                </div>
+
+                <div class="messages-container">
+                    <div id="messages-list"></div>
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 TAB 5: IMAGE ASSETS
+            ========================== -->
+            <div id="tab-images" class="tab-pane">
+
+                <div class="section-header">
+                    <div>
+                        <h2>Image Assets</h2>
+                        <p>Upload photos and toggle <strong>+ Gallery</strong> to show them in the public "Beyond the code" section on your portfolio.</p>
+                    </div>
+                </div>
+
+                <!-- DRAG AND DROP UPLOAD ZONE -->
+                <div id="upload-dropzone" class="upload-box">
+                    <span style="font-size:32px;display:block;margin-bottom:8px;">📁</span>
+                    <strong>Drag & drop images here or click to browse</strong>
+                    <p style="color:var(--light-grey);font-size:12px;margin-top:5px;">Supports PNG, JPG, JPEG, WEBP and SVG.</p>
+                    <input type="file" id="gallery-file-input" accept="image/*" multiple>
+                </div>
+
+                <!-- GALLERY GRID -->
+                <div id="gallery-grid" class="gallery-grid"></div>
+
+            </div>
+
+
+            <!-- =========================
+                 TAB 6: SETTINGS
+            ========================== -->
+            <div id="tab-settings" class="tab-pane">
+
+                <div class="settings-grid">
+
+                    <!-- PORTFOLIO PROFILE SETTINGS -->
+                    <div class="panel-card">
+                        <div class="panel-title">Portfolio Information</div>
+                        <div class="panel-subtitle">Edit the information displayed on your live website.</div>
+
+                        <form id="profile-form">
+                            <div class="form-group">
+                                <label for="profile-name">Full Name</label>
+                                <input type="text" id="profile-name" class="form-input" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="profile-eyebrow">Professional Title / Eyebrow</label>
+                                <input type="text" id="profile-eyebrow" class="form-input">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="profile-headline">Hero Headline</label>
+                                <input type="text" id="profile-headline" class="form-input">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="profile-description">Short Bio / Description</label>
+                                <textarea id="profile-description" class="form-textarea"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="profile-email">Contact Email</label>
+                                <input type="email" id="profile-email" class="form-input" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="profile-github">GitHub URL</label>
+                                <input type="url" id="profile-github" class="form-input">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="profile-linkedin">LinkedIn URL</label>
+                                <input type="url" id="profile-linkedin" class="form-input">
+                            </div>
+
+                            <button type="submit" class="btn-primary">Save Profile Info</button>
+                        </form>
+                    </div>
+
+                    <!-- SECURITY & ACCESS SETTINGS -->
+                    <div>
+                        <div class="panel-card" style="margin-bottom:25px;">
+                            <div class="panel-title">Admin Password</div>
+                            <div class="panel-subtitle">Change credentials used to log into this dashboard.</div>
+
+                            <form id="password-form">
+                                <div class="form-group">
+                                    <label for="curr-password">Current Password</label>
+                                    <input type="password" id="curr-password" class="form-input" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="new-password">New Password</label>
+                                    <input type="password" id="new-password" class="form-input" minlength="4" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="confirm-password">Confirm New Password</label>
+                                    <input type="password" id="confirm-password" class="form-input" minlength="4" required>
+                                </div>
+
+                                <button type="submit" class="btn-primary">Update Password</button>
+                            </form>
+                        </div>
+
+                        <div class="panel-card">
+                            <div class="panel-title" style="color:#d32f2f;">Danger Zone</div>
+                            <div class="panel-subtitle">Reset all portfolio data, visitors, messages, and projects back to initial default state.</div>
+                            <button id="reset-factory-btn" class="btn-danger">Reset All Data to Defaults</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <!-- =========================
+         MODALS
+    ========================== -->
+
+    <!-- ADD / EDIT PROJECT MODAL -->
+    <div id="project-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="project-modal-title">Add New Work</h3>
+                <button type="button" class="modal-close close-modal">&times;</button>
+            </div>
+
+            <form id="project-form">
+                <div class="form-group">
+                    <label for="proj-title">Project Title</label>
+                    <input type="text" id="proj-title" class="form-input" placeholder="e.g. Smart POS System" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="proj-category">Category</label>
+                    <input type="text" id="proj-category" class="form-input" placeholder="Website, Mobile App, API, UI/UX" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="proj-subtitle">Description</label>
+                    <textarea id="proj-subtitle" class="form-textarea" placeholder="Explain what the project does and the problem it solves..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="proj-tech">Technologies (comma separated)</label>
+                    <input type="text" id="proj-tech" class="form-input" placeholder="HTML, CSS, Flutter, FastAPI, SQLite">
+                </div>
+
+                <div class="form-group">
+                    <label for="proj-status">Publication Status</label>
+                    <select id="proj-status" class="form-select">
+                        <option value="Published">Published (Visible on portfolio)</option>
+                        <option value="Draft">Draft (Hidden from visitors)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="proj-link">Project URL / Link</label>
+                    <input type="text" id="proj-link" class="form-input" placeholder="https://github.com/... or #">
+                </div>
+
+                <div class="form-group">
+                    <label>Project Thumbnail Image</label>
+                    <div style="display:flex;gap:15px;align-items:center;margin-bottom:8px;">
+                        <img id="proj-image-preview" src="Test.jpg" alt="Preview" style="width:70px;height:70px;object-fit:cover;border-radius:8px;border:1px solid var(--border-color);">
+                        <div style="flex:1;">
+                            <input type="file" id="proj-image-file" accept="image/*" class="form-input" style="padding:6px;">
+                            <small>Or enter image filename/URL:</small>
+                            <input type="text" id="proj-image-url" class="form-input" placeholder="Test.jpg" style="margin-top:4px;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary close-modal">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Project</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- DELETE CONFIRMATION MODAL -->
+    <div id="delete-modal" class="modal-overlay">
+        <div class="modal-card" style="max-width:440px;">
+            <div class="modal-header">
+                <h3>Delete Project</h3>
+                <button type="button" class="modal-close close-modal">&times;</button>
+            </div>
+            <p style="color:var(--light-grey);margin-bottom:20px;font-size:14px;">
+                Are you sure you want to delete this project from your portfolio? This action cannot be undone.
+            </p>
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary close-modal">Cancel</button>
+                <button type="button" id="confirm-delete-btn" class="btn-danger">Yes, Delete</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- VIEW MESSAGE MODAL -->
+    <div id="message-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="msg-modal-subject">Inquiry</h3>
+                <button type="button" class="modal-close close-modal">&times;</button>
+            </div>
+            <div style="margin-bottom:15px;font-size:13px;">
+                <div style="color:var(--light-grey);margin-bottom:4px;">From:</div>
+                <strong id="msg-modal-from"></strong>
+                <div id="msg-modal-date" style="font-size:11px;color:var(--light-grey);margin-top:2px;"></div>
+            </div>
+            <div class="panel-card" style="background:var(--hover-color);margin-bottom:20px;">
+                <p id="msg-modal-body" style="white-space:pre-wrap;line-height:1.6;font-size:14px;"></p>
+            </div>
+            <div class="modal-actions">
+                <button type="button" id="msg-modal-delete" class="btn-secondary" style="color:#c44;">Delete</button>
+                <a id="msg-modal-reply" href="#" class="btn-primary" style="text-decoration:none;">Reply via Email ↗</a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container" class="toast-container"></div>
+
+
+    <!-- SCRIPTS -->
+    <script src="data-store.js"></script>
+    <script src="admin-dashboard.js"></script>
+
+</body>
+</html>
